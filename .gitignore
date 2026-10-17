@@ -27,3 +27,17 @@ runs/
 # OS
 .DS_Store
 Thumbs.db
+
+# Python virtual environments
+venv312/
+
+# Environment variables
+.env
+.env.*
+
+# Keep the example environment file
+!.env.example
+
+# IDE settings (ignore by default)
+.vscode/*
+!.vscode/extensions.json
