@@ -1,12 +1,14 @@
 from fastapi import APIRouter
+
 from backend.api.models import OptimizeRequest
 from backend.core.config import settings
 from backend.core.logger import get_logger
-from backend.data.fetcher import fetch_prices, compute_log_returns
-from backend.optimization.stub import stub_optimize, stub_metrics, stub_frontier
+from backend.data.fetcher import compute_log_returns, fetch_prices
+from backend.optimization.stub import stub_frontier, stub_metrics, stub_optimize
 
 logger = get_logger(__name__)
 router = APIRouter(prefix="/api/v1")
+
 
 @router.get("/health")
 async def health() -> dict:
@@ -25,6 +27,7 @@ async def health() -> dict:
         "error": None,
     }
 
+
 @router.post("/optimize")
 async def optimize(request: OptimizeRequest) -> dict:
     """Run portfolio optimization and return weights, metrics, and frontier.
@@ -40,7 +43,9 @@ async def optimize(request: OptimizeRequest) -> dict:
     """
     logger.info(
         "Optimize called — assets: %s, method: %s, objective: %s",
-        request.assets, request.method, request.objective
+        request.assets,
+        request.method,
+        request.objective,
     )
 
     try:

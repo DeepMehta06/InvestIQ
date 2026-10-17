@@ -1,7 +1,9 @@
 import numpy as np
+
 from backend.core.logger import get_logger
 
 logger = get_logger(__name__)
+
 
 def stub_optimize(
     tickers: list[str],
@@ -22,6 +24,7 @@ def stub_optimize(
     logger.info("Stub optimizer returning uniform weights for %d assets", n)
     return weights
 
+
 def stub_metrics() -> dict:
     """Return placeholder risk metrics for Phase 1 skeleton.
 
@@ -30,14 +33,15 @@ def stub_metrics() -> dict:
     """
     return {
         "expected_return": 0.0,
-        "volatility":      0.0,
-        "sharpe_ratio":    0.0,
-        "sortino_ratio":   0.0,
-        "max_drawdown":    0.0,
-        "var_95":          0.0,
-        "cvar_95":         0.0,
+        "volatility": 0.0,
+        "sharpe_ratio": 0.0,
+        "sortino_ratio": 0.0,
+        "max_drawdown": 0.0,
+        "var_95": 0.0,
+        "cvar_95": 0.0,
         "var_95_parametric": 0.0,
     }
+
 
 def stub_frontier(tickers: list[str]) -> list[dict]:
     """Return an empty frontier list for Phase 1.

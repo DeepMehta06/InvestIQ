@@ -1,4 +1,4 @@
-"""Phase 1 validation runner — frontend side.
+"""Phase 1 validation runner — backend + frontend.
 
 Usage:
     python scripts/run_phase_1.py
@@ -58,12 +58,17 @@ def main() -> None:
 
     status = load_status()
 
+    run_step("pip_install",   "pip install -r requirements.txt", status)
+    run_step("black_check",   "black backend/ --check",          status)
+    run_step("isort_check",   "isort backend/ --check-only",     status)
+    run_step("pytest_backend", "pytest backend/tests/ -v --cov=backend --cov-report=term-missing", status)
+
     run_step("npm_install",  "npm install",            status, cwd="frontend")
     run_step("type_check",   "npm run type-check",     status, cwd="frontend")
     run_step("lint",         "npm run lint",            status, cwd="frontend")
     run_step("build",        "npm run build",           status, cwd="frontend")
 
-    print("\n✅ Phase 1 frontend validation complete.")
+    print("\n✅ Phase 1 backend + frontend validation complete.")
 
 
 if __name__ == "__main__":

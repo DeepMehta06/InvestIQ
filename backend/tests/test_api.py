@@ -1,6 +1,8 @@
 import pytest
 from httpx import AsyncClient
+
 from backend.main import app
+
 
 @pytest.mark.asyncio
 async def test_health_returns_ok():
@@ -11,6 +13,7 @@ async def test_health_returns_ok():
     assert body["success"] is True
     assert body["data"]["status"] == "ok"
     assert "version" in body["data"]
+
 
 @pytest.mark.asyncio
 async def test_optimize_fewer_than_two_assets_returns_error():
@@ -28,7 +31,8 @@ async def test_optimize_fewer_than_two_assets_returns_error():
                 "bl_views": None,
             },
         )
-    assert response.status_code == 422   # Pydantic validation error
+    assert response.status_code == 422  # Pydantic validation error
+
 
 @pytest.mark.asyncio
 async def test_optimize_invalid_method_returns_422():

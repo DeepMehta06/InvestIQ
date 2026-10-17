@@ -1,5 +1,7 @@
 from pathlib import Path
+
 from pydantic_settings import BaseSettings
+
 
 class Settings(BaseSettings):
     """Application configuration loaded from .env and environment."""
@@ -15,8 +17,8 @@ class Settings(BaseSettings):
     # Finance
     risk_free_rate: float = 0.05
     trading_days_per_year: int = 252
-    min_history_days: int = 252      # minimum 1 year of data required
-    frontier_points: int = 500       # number of points on the Efficient Frontier
+    min_history_days: int = 252  # minimum 1 year of data required
+    frontier_points: int = 500  # number of points on the Efficient Frontier
 
     # ML (Phase 3 — defined here so config is complete)
     rf_n_estimators: int = 200
@@ -26,5 +28,6 @@ class Settings(BaseSettings):
     class Config:
         env_file = ".env"
         env_file_encoding = "utf-8"
+
 
 settings = Settings()
