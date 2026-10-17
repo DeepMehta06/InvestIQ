@@ -34,10 +34,47 @@ graph TD
 
 ## Backend Setup
 
+Run everything from the repository root (the app is imported as `backend.main`).
+
 ```bash
-cd portfolio-optimizer/backend
+python -m venv venv
+source venv/bin/activate          # Windows: venv\Scripts\activate
 pip install -r requirements.txt
-uvicorn main:app --reload --port 8000
+uvicorn backend.main:app --reload --port 8000
+```
+
+### Manual API tests
+
+With the server running, the frontend team can verify the backend independently:
+
+```bash
+# Health check
+curl http://localhost:8000/api/v1/health
+
+# Optimize (stub — returns uniform weights)
+curl -X POST http://localhost:8000/api/v1/optimize \
+  -H "Content-Type: application/json" \
+  -d '{
+    "assets": ["AAPL","MSFT","NVDA","JPM","KO"],
+    "start_date": "2022-01-01",
+    "end_date": "2025-01-01",
+    "method": "historical",
+    "objective": "max_sharpe",
+    "risk_free_rate": 0.05,
+    "target_return": null,
+    "bl_views": null
+  }'
+```
+
+> `/optimize` downloads real prices from Yahoo Finance (cached in `CACHE_DIR`), so the first call needs internet access. Weights and metrics are stubs until Phase 2.
+
+### Backend checks
+
+```bash
+black backend/ --check
+isort backend/ --check-only
+pytest backend/tests/ -v --cov=backend --cov-report=term-missing
+python scripts/run_phase_1.py     # runs all backend + frontend checks
 ```
 
 ---
